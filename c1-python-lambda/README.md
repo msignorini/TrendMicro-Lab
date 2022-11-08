@@ -1,13 +1,15 @@
 # c1-python-lambda
 
 ## Description
-This application is a proof of concept for testing TrendMicro Cloud One Application Security on a Python 3.8 Lambda function running in AWS.
+This application is a proof of concept for testing `TrendMicro Cloud One Application Security` on a `Python 3.8 Lambda` function running in AWS.
 
 ![Architecture](images/architecture.png)
 
 ## DynamoDB
-Table name: users
-Partition key: email (String)
+Create a new table named `users` with partition key `email` of type String.
+
+![DynamoDB](images/create_dynamo.png)
+
 
 ## API Gateway
 Type: REST API
