@@ -10,12 +10,21 @@ Create a new table named `users` with partition key `email` of type String.
 
 ![DynamoDB](images/create_dynamo.png)
 
+## Lambda
+Create a new lambda function from scratch named `c1-python-lambda` using runtime `Python 3.8`, architecture `x86_64` and existing role `MS-Lambda-API`.
+
+![Lambda](images/create_lambda.png)
+
+Copy and paste the source code in the `Code source` editor, then save it and click `Deploy`.
+
+![LambdaCode](images/lambda_code.png)
+
 
 ## API Gateway
-Type: REST API
-Choose the protocol: REST
-Create new API: New APi
-API name: c1-python-lambda-api
+Create a new API Gateway of type `REST API` then in the next page select protocol `REST` and create `New API`. Use `c1-python-lambda-api` as the API name.
+
+![APIGW](images/apigw_create.png)
+
 #### Resources
 Create Method: GET
 - Use Lambda Proxy integration: yes
