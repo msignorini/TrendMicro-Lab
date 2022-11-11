@@ -35,7 +35,28 @@ Create Method a POST method selecting `Use Lambda Proxy integration` and lambda 
 
 Then deploy API creating a new deployment stage call `prod`.
 
-![APIGW_deploy](images/apigw_deploy.png)
+![APIGW_deploy_1](images/apigw_deploy_1.png)
+
+Take a note of the invoke URL which will be use in Postman, in this case `https://0u5d1ab8i4.execute-api.eu-west-1.amazonaws.com/prod`
+
+![APIGW_deploy_2](images/apigw_deploy_2.png)
+
+## Postman
+Example of GET usage
+![postman_get](images/postman_get.png)
+
+Example of POST usage, it this case a body must be defined, like the one in the following example:
+
+Body (RAW/JSON)
+```json
+{
+    "username": "valerio",
+    "email": "valerio@gmmail.com"
+}
+```
+![postman_post](images/postman_post.png)
+
+
 
 ## TrendMicro
 #### Guida
