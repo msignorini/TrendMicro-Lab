@@ -138,11 +138,6 @@ Open the ECR console and create a private repository named `node-single-page`.
 
 ![ecr_1](images/ecr_1.png)
 
-From the local machine obtain the ECR repository credentials.
-```sh
-aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 287836408715.dkr.ecr.eu-west-1.amazonaws.com
-```
-
 ## Build and push the image to ECR
 Open a shell in the folder `node-single-page` then build and push the Docker image to AWS ECR.
 
@@ -206,6 +201,7 @@ Copy the EXTERNAL-IP address an open it in a browser using HTTP, you should now 
 
 ![app_1](images/app_1.png)
 
+## Delete the resources in kubernetes
 Delete the pod
 ```sh
 kubectl delete -f node-single-page-lb-ecr.yaml
