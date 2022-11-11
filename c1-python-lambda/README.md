@@ -48,20 +48,20 @@ arn:aws:lambda:eu-west-1:800880067056:layer:CloudOne-ApplicationSecurity-python:
 https://agents.de-1.application.cloudone.trendmicro.com/
 
 #### Environment Variables
-```json
-AWS_LAMBDA_EXEC_WRAPPER:	/opt/trend_app_protect
-TREND_AP_CACHE_DIR:	/tmp/trend_cache
-TREND_AP_HELLO_URL:	https://agents.de-1.application.cloudone.trendmicro.com/
-TREND_AP_HTTP_TIMEOUT:	5
-TREND_AP_INITIAL_DELAY_MS:	1
-TREND_AP_KEY:	ceff8820-97fe-4a8f-9e21-0b58a62d1e8a
-TREND_AP_LOG_FILE:	STDERR
-TREND_AP_MAX_DELAY_MS:	100
-TREND_AP_MIN_REPORT_SIZE:	1
-TREND_AP_PREFORK_MODE:	False
-TREND_AP_READY_TIMEOUT:	30
-TREND_AP_SECRET:	91b6d3ca-375c-4232-970c-9fb0a26aba42
-TREND_AP_TRANSACTION_FINISH_TIMEOUT:	10
+```txt
+AWS_LAMBDA_EXEC_WRAPPER: /opt/trend_app_protect
+TREND_AP_CACHE_DIR: /tmp/trend_cache
+TREND_AP_HELLO_URL: https://agents.de-1.application.cloudone.trendmicro.com/
+TREND_AP_HTTP_TIMEOUT: 5
+TREND_AP_INITIAL_DELAY_MS: 1
+TREND_AP_KEY: <get_it_on_trendmicro_dashboard>
+TREND_AP_LOG_FILE: STDERR
+TREND_AP_MAX_DELAY_MS: 100
+TREND_AP_MIN_REPORT_SIZE: 1
+TREND_AP_PREFORK_MODE: False
+TREND_AP_READY_TIMEOUT: 30
+TREND_AP_SECRET: <get_it_on_trendmicro_dashboard>
+TREND_AP_TRANSACTION_FINISH_TIMEOUT: 10
 ```
 
 #### Step
