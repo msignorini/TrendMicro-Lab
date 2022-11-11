@@ -48,6 +48,7 @@ arn:aws:lambda:eu-west-1:800880067056:layer:CloudOne-ApplicationSecurity-python:
 https://agents.de-1.application.cloudone.trendmicro.com/
 
 #### Environment Variables
+'''json
 AWS_LAMBDA_EXEC_WRAPPER:	/opt/trend_app_protect
 TREND_AP_CACHE_DIR:	/tmp/trend_cache
 TREND_AP_HELLO_URL:	https://agents.de-1.application.cloudone.trendmicro.com/
@@ -61,6 +62,7 @@ TREND_AP_PREFORK_MODE:	False
 TREND_AP_READY_TIMEOUT:	30
 TREND_AP_SECRET:	91b6d3ca-375c-4232-970c-9fb0a26aba42
 TREND_AP_TRANSACTION_FINISH_TIMEOUT:	10
+'''
 
 #### Step
 - Add Layer
