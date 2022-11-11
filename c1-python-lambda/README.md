@@ -25,16 +25,17 @@ Create a new API Gateway of type `REST API` then in the next page select protoco
 
 ![APIGW](images/apigw_create.png)
 
-#### Resources
-Create Method: GET
-- Use Lambda Proxy integration: yes
-- Lambda Function: c1-python-lambda
-Create Method: POST
-- Use Lambda Proxy integration: yes
-- Lambda Function: c1-python-lambda
-#### Deploy API
-Deployment stage: [New Stage]
-Stage name: PROD
+Create Method a GET method selecting `Use Lambda Proxy integration` and lambda function `c1-python-lambda`.
+
+![APIGW_get](images/apigw_get.png)
+
+Create Method a POST method selecting `Use Lambda Proxy integration` and lambda function `c1-python-lambda`.
+
+![APIGW_post](images/apigw_post.png)
+
+Then deploy API creating a new deployment stage call `prod`.
+
+![APIGW_deploy](images/apigw_deploy.png)
 
 ## TrendMicro
 #### Guida
