@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-single-page-service
+spec:
+  selector:
+    project: node-single-page
+  ports:
+    - protocol: 'TCP'
+      port: 80
+      targetPort: 8080 # container listing port
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-single-page-deployment
+spec: # configuration of the deployment
+  replicas: 1 # default 1 if not specified
+  selector:
+    matchLabels: # (AND condition)
+      project: node-single-page
+      auhtor: marco
+  template:
+    metadata:
+      labels: 
+        project: node-single-page
+        auhtor: marco
+    spec: # configuration of individual pod
+      containers:
+        - name: first-node-app
+          image: msignorini/kub-node-single-page:1
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            periodSeconds: 3
+            initialDelaySeconds: 10

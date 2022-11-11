@@ -116,3 +116,98 @@ Run the following commands in order to create a custom namespace named `marco-na
 kubectl create namespace marco-namespace
 kubectl config set-context --current --namespace=marco-namespace
 ```
+
+Check the list of current configured namespaces.
+```sh
+kubectl get namespaces
+```
+
+You should expect an output like the following:
+```sh
+$ kubectl get namespaces
+NAME              STATUS   AGE
+default           Active   11h
+kube-node-lease   Active   11h
+kube-public       Active   11h
+kube-system       Active   11h
+marco-namespace   Active   10m
+```
+
+## Create ECR repository
+Open the ECR console and create a private repository named `node-single-page`.
+
+![ecr_1](images/ecr_1.png)
+
+From the local machine obtain the ECR repository credentials.
+```sh
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 287836408715.dkr.ecr.eu-west-1.amazonaws.com
+```
+
+## Build and push the image to ECR
+Open a shell in the folder `node-single-page` then build and push the Docker image to AWS ECR.
+
+Obtain the ECR repository credentials and perform docker login.
+```sh
+aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 287836408715.dkr.ecr.eu-west-1.amazonaws.com
+```
+
+Build the image using the ECR repository name
+```sh
+docker build -t 287836408715.dkr.ecr.eu-west-1.amazonaws.com/node-single-page .
+```
+s
+Push the image to ECR
+```sh
+docker push 287836408715.dkr.ecr.eu-west-1.amazonaws.com/node-single-page
+```
+
+You should now see the repository updated.
+
+![ecr_2](images/ecr_2.png)
+
+## Deploy the resources in kubernetes
+Open a shell in the folder `node-single-page/kubernets` then run the following command in order to deploy the pod and service:
+```sh
+kubectl apply -f node-single-page-lb-ecr.yaml
+```
+
+You should expect an output like the following:
+```sh
+$ kubectl apply -f node-single-page-lb-ecr.yaml
+service/node-single-page-service created
+deployment.apps/node-single-page-deployment created
+```
+
+Check if the pod is up and running:
+```sh
+$ kubectl get pods
+```
+
+You should expect an output like the following:
+```sh
+$ kubectl get pods
+NAME                                           READY   STATUS    RESTARTS   AGE
+node-single-page-deployment-746956d7db-f77ml   1/1     Running   0          73s
+```
+
+Check the service parameters:
+```sh
+$ kubectl get services
+```
+
+You should expect an output like the following:
+```sh
+$ kubectl get services
+NAME                       TYPE           CLUSTER-IP     EXTERNAL-IP                                                             PORT(S)        AGE
+node-single-page-service   LoadBalancer   10.100.27.42   a0baef850d15640e7bff051971b6ce46-67499739.eu-west-1.elb.amazonaws.com   80:32262/TCP   2m13s
+```
+
+Copy the EXTERNAL-IP address an open it in a browser using HTTP, you should now see the following page:
+
+![app_1](images/app_1.png)
+
+Delete the pod
+```sh
+kubectl delete -f node-single-page-lb-ecr.yaml
+```
+
