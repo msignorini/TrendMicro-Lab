@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: c1cs-log-forwarder-deployment
+spec: # configuration of the deployment
+  replicas: 1 # default 1 if not specified
+  selector:
+    matchLabels: # (AND condition)
+      project: c1cs-log-forwarder
+  template:
+    metadata:
+      labels:
+        project: c1cs-log-forwarder
+    spec: # configuration of individual pod
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+      containers:
+        - name: c1cs-log-forwarder
+          image: 287836408715.dkr.ecr.eu-west-1.amazonaws.com/c1cs_log_forwarder:1
+          env:
+            - name: LF_C1_URL
+              value: 'de-1.cloudone.trendmicro.com:443'
+            - name: LF_C1_API_KEY
+              value: 'xxx'
+            - name: LF_SIEM_HOST
+              value: 'x.x.x.x'
+            - name: LF_SIEM_PORT
+              value: '514'
+            - name: LF_FACILITY
+              value: 'local3'
+            - name: LF_INTERVAL
+              value: '60'
+            - name: LF_OVERLAP
+              value: '10'
+          securityContext:
+            allowPrivilegeEscalation: false

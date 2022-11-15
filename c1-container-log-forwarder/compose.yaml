@@ -1,0 +1,6 @@
+services:
+  log_forwarder:
+    build: .
+    container_name: c1cs_log_forwarder
+    env_file:
+      - ./env/log_forwarder.env

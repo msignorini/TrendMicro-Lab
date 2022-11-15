@@ -20,13 +20,17 @@ spec: # configuration of the deployment
   selector:
     matchLabels: # (AND condition)
       project: node-single-page
-      auhtor: marco
+      author: marco
   template:
     metadata:
-      labels: 
+      labels:
         project: node-single-page
-        auhtor: marco
+        author: marco
     spec: # configuration of individual pod
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
       containers:
         - name: node-single-page
           image: 287836408715.dkr.ecr.eu-west-1.amazonaws.com/node-single-page
@@ -36,3 +40,5 @@ spec: # configuration of the deployment
               port: 8080
             periodSeconds: 3
             initialDelaySeconds: 10
+          securityContext:
+            allowPrivilegeEscalation: false

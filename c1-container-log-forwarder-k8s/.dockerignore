@@ -1,0 +1,7 @@
+.gitignore
+__pycache__
+images
+Dockerfile
+LICENSE
+README.md
+kubernetes/
