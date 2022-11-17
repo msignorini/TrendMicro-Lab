@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: c1cs-log-forwarder-deployment
+spec: # configuration of the deployment
+  replicas: 1 # default 1 if not specified
+  selector:
+    matchLabels: # (AND condition)
+      project: c1cs-log-forwarder
+  template:
+    metadata:
+      labels:
+        project: c1cs-log-forwarder
+    spec: # configuration of individual pod
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+      containers:
+        - name: c1cs-log-forwarder
+          image: 287836408715.dkr.ecr.eu-west-1.amazonaws.com/c1cs_log_forwarder:1
+          env:
+            - name: LF_C1_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: lf_c1_url
+            - name: LF_C1_API_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: lf_c1_api_key
+            - name: LF_SIEM_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: lf_siem_host
+            - name: LF_SIEM_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: lf_siem_port
+            - name: LF_FACILITY
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: lf_facility
+            - name: LF_INTERVAL
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: lf_interval
+            - name: LF_OVERLAP
+              valueFrom:
+                configMapKeyRef:
+                  name: data-store-env
+                  key: lf_overlap
+          volumeMounts:
+          - name: config
+            mountPath: "/config"
+            readOnly: true
+      volumes:
+      - name: config
+        configMap:
+        name: data-store-env
+
+          securityContext:
+            allowPrivilegeEscalation: false

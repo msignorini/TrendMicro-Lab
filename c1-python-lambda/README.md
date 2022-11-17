@@ -59,16 +59,17 @@ Body (RAW/JSON)
 
 
 ## TrendMicro
-#### Guida
+#### Reference
 https://cloudone.trendmicro.com/docs/application-security/aws-lambda-with-official-runtimes/#python-layers
 
-#### Python AWS Lambda Layer ARN
+Add a new Layer to the lambda function and specify the following ARN:
+```
 arn:aws:lambda:eu-west-1:800880067056:layer:CloudOne-ApplicationSecurity-python:1
+```
 
-#### Connectivity for multi-region aware agents (de)
-https://agents.de-1.application.cloudone.trendmicro.com/
+![lambda_layer](images/lambda_layer.png)
 
-#### Environment Variables
+Then configure the following environment variables:
 ```txt
 AWS_LAMBDA_EXEC_WRAPPER: /opt/trend_app_protect
 TREND_AP_CACHE_DIR: /tmp/trend_cache
@@ -85,16 +86,15 @@ TREND_AP_SECRET: <get_it_on_trendmicro_dashboard>
 TREND_AP_TRANSACTION_FINISH_TIMEOUT: 10
 ```
 
-#### Step
-- Add Layer
-- - Specify an ARN (arn:aws:lambda:eu-west-1:800880067056:layer:CloudOne-ApplicationSecurity-python:1)
-- Configuration / Environment variables
+![lambda_env](images/lambda_env.png)
 
-## Postman
+#### Attack Patterns
+Malicious Payload Example 1
+```
+https://7c6x4l6zga.execute-api.eu-west-1.amazonaws.com/prod?url=https%3A%2F%2Fphishingexample.com/goodbankfrauddept
+```
 
-#### POST example
-Body (RAW/JSON)
-{
-    "username": "giovanni",
-    "email": "giovanni@libero.it"
-}
+Malicious Payload Example 2
+```
+https://7c6x4l6zga.execute-api.eu-west-1.amazonaws.com/prod?url=https%3A%2F%2Fmalwareexample.com/currentevent.pdf
+```
