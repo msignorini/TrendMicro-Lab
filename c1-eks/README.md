@@ -32,6 +32,11 @@ The template url is the following
 https://s3.us-west-2.amazonaws.com/amazon-eks/cloudformation/2020-10-29/amazon-eks-vpc-private-subnets.yaml
 ```
 
+Alternatively it is also possibile to create a VPC with public subnets only:
+```url
+https://s3.us-west-2.amazonaws.com/amazon-eks/cloudformation/2020-10-29/amazon-eks-vpc-sample.yaml
+```
+
 Open the CloudFormation console and create a new stack using the above mentioned model.
 
 ![stack_1](images/stack_1.png)

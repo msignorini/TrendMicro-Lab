@@ -19,6 +19,8 @@ spec: # configuration of the deployment
       containers:
         - name: c1cs-log-forwarder
           image: 287836408715.dkr.ecr.eu-west-1.amazonaws.com/c1cs_log_forwarder:1
+          securityContext:
+            allowPrivilegeEscalation: false
           env:
             - name: LF_C1_URL
               valueFrom:
@@ -64,5 +66,3 @@ spec: # configuration of the deployment
         configMap:
         name: data-store-env
 
-          securityContext:
-            allowPrivilegeEscalation: false
