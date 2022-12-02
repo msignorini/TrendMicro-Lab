@@ -1,3 +1,4 @@
+# Trend Micro Cloud One Container Security Lab
 ## Prerequisites
 - IAM user with admin access
 - AWS CLI installed and configured on local machine
@@ -27,7 +28,7 @@ In the following example the new role is named `MS-eksNodeGroup`.
 
 ## Networking
 In order to create the network will we use a CloudFormation template provided by AWS which will deploy public and private subnets and all the necessary components such as route table, Internet Gateway and NAT Gateway.
-The template url is the following
+The template url is the following if you would like public and private subnets:
 ```url
 https://s3.us-west-2.amazonaws.com/amazon-eks/cloudformation/2020-10-29/amazon-eks-vpc-private-subnets.yaml
 ```
@@ -55,7 +56,7 @@ Open the EKS console and create a new cluster named `eks-01` selecting `MS-eksCl
 
 ![eks_1](images/eks_1.png)
 
-In the networking step select the VPC which were created by CloudFormation, in other words the one with the name starting with `eks-net-01`. Do the same for the Security Group. For `Cluster endpoint access` select `Public and private`. Leave all the other parameters as default and create the cluster.
+In the networking step select the VPC which were created by CloudFormation, in other words the one with the name starting with `eks-net-01`. Do the same for the Security Group. For `Cluster endpoint access` select `Public and private` if you have used the first VPC CloudFormation template or `Public Only` if you have used the second VPC CloudFormation template. Leave all the other parameters as default and create the cluster.
 
 ![eks_2](images/eks_2.png)
 
@@ -212,3 +213,22 @@ Delete the pod
 kubectl delete -f node-single-page-lb-ecr.yaml
 ```
 
+## Create RDS PostGres instance
+
+Open the RDS console and create a new DB subnet group. Type `trendmicrodb-subgroup` in the name and description fields. 
+
+![subgroup](images/subgroup.png)
+
+Open the RDS console and create a new database with `Standard create`, select `PostgreSQL 13.7-R1` engine and the `Free tier` template.
+
+![rds_1](images/rds_1.png)
+
+Type `trendmicrodb` in the DB instance identifier field and choose a username and a password.
+
+![rds_2](images/rds_2.png)
+
+Allocate storage up to 20 GiB and disable autoscaling. Then select the same VPC as EKS and add all the public subnets with the Node Group Security Group. Then click Create. Disable Performance Insights. 
+
+![rds_3](images/rds_3.png)
+
+Leave all the other options as default and click Create.
