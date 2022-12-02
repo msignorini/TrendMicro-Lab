@@ -1,0 +1,24 @@
+# https://github.com/deep-security/smartcheck-helm
+db:
+  user: <insert_RDS_username_here>
+  password: <insert_RDS_password_here>
+  host: <insert_RDS_endpoint_here>
+  port: 5432
+  tls:
+    ca:
+      valueFrom:
+        configMapKeyRef:
+          name: dssc-db-trust
+          key: ca
+cloudOne:
+    apiKey: <insert_Trend_Micro_API_Key_here>
+    endpoint: https://container.de-1.cloudone.trendmicro.com
+auth:
+  ## secretSeed is used as part of the password generation process for
+  ## all auto-generated internal passwords, ensuring that each installation of
+  ## Deep Security Smart Check has different passwords.
+  ##
+  ## Default value: {must be provided by the installer}
+  secretSeed: secretSeed
+service:
+  type: NodePort
