@@ -62,6 +62,33 @@ In the networking step select the VPC which were created by CloudFormation, in o
 ![eks_2](images/eks_2.png)
 
 
+## Create node group
+Open the EKS console and create a node group.
+
+![node_group_1](images/node_group_1.png)
+
+Type `node-group-01` in the name field and select `MS-eksNodeGroup` as Node IAM role.
+
+![node_group_2](images/node_group_2.png)
+
+In the Set compute and scaling configuration select t3.medium for the instance type and configure `1 nodes` for Desired/Minimum/Maximum size. 
+
+![node_group_3](images/node_group_3.png)
+
+Leave all the other parameters as default and create the node group.
+
+Check the presence of the worker node in kubernetes running the following command:
+```sh
+kubectl get nodes
+```
+
+You should expect an output like the following:
+```sh
+$ kubectl get nodes
+NAME                                            STATUS   ROLES    AGE     VERSION
+ip-192-168-221-254.eu-west-1.compute.internal   Ready    <none>   7m31s   v1.23.9-eks-ba74326
+```
+
 ## Kubectl configuration
 In order to create the kubectl configuration file on our local machine run the following command in which we need to specify the region and the EKS cluster name
 
@@ -89,33 +116,6 @@ kubernetes   ClusterIP   10.100.0.1   <none>        443/TCP   11m
 
 Reference:
 https://aws.amazon.com/premiumsupport/knowledge-center/eks-cluster-connection/
-
-## Create node group
-Open the EKS console and create a node group.
-
-![node_group_1](images/node_group_1.png)
-
-Type `node-group-01` in the name field and select `MS-eksNodeGroup` as Node IAM role.
-
-![node_group_2](images/node_group_2.png)
-
-In the Set compute and scaling configuration select t3.medium for the instance type and configure `1 nodes` for Desired/Minimum/Maximum size. 
-
-![node_group_3](images/node_group_3.png)
-
-Leave all the other parameters as default and create the node group.
-
-Check the presence of the worker node in kubernetes running the following command:
-```sh
-kubectl get nodes
-```
-
-You should expect an output like the following:
-```sh
-$ kubectl get nodes
-NAME                                            STATUS   ROLES    AGE     VERSION
-ip-192-168-221-254.eu-west-1.compute.internal   Ready    <none>   7m31s   v1.23.9-eks-ba74326
-```
 
 ## Create a custom namespace and set it as default
 Run the following commands in order to create a custom namespace named `marco-namespace` and configure it as the default namespace.
