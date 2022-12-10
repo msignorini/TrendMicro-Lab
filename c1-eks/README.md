@@ -77,17 +77,7 @@ In the Set compute and scaling configuration select t3.medium for the instance t
 
 Leave all the other parameters as default and create the node group.
 
-Check the presence of the worker node in kubernetes running the following command:
-```sh
-kubectl get nodes
-```
 
-You should expect an output like the following:
-```sh
-$ kubectl get nodes
-NAME                                            STATUS   ROLES    AGE     VERSION
-ip-192-168-221-254.eu-west-1.compute.internal   Ready    <none>   7m31s   v1.23.9-eks-ba74326
-```
 
 ## Kubectl configuration
 In order to create the kubectl configuration file on our local machine run the following command in which we need to specify the region and the EKS cluster name
@@ -114,6 +104,19 @@ NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.100.0.1   <none>        443/TCP   11m
 ```
 
+Check the presence of the worker nodes in kubernetes running the following command:
+```sh
+kubectl get nodes
+```
+
+You should expect an output like the following:
+```sh
+$ kubectl get nodes
+NAME                                            STATUS   ROLES    AGE     VERSION
+ip-192-168-144-127.eu-west-1.compute.internal   Ready    <none>   4m36s   v1.23.13-eks-fb459a0
+ip-192-168-243-28.eu-west-1.compute.internal    Ready    <none>   4m35s   v1.23.13-eks-fb459a0
+```
+
 Reference:
 https://aws.amazon.com/premiumsupport/knowledge-center/eks-cluster-connection/
 
@@ -121,6 +124,9 @@ https://aws.amazon.com/premiumsupport/knowledge-center/eks-cluster-connection/
 Run the following commands in order to create a custom namespace named `marco-namespace` and configure it as the default namespace.
 ```sh
 kubectl create namespace marco-namespace
+```
+
+```sh
 kubectl config set-context --current --namespace=marco-namespace
 ```
 
@@ -214,9 +220,9 @@ Delete the pod
 kubectl delete -f node-single-page-lb-ecr.yaml
 ```
 
-## Create RDS PostGres instance
+## Create RDS PostgreSQL instance
 
-Open the RDS console and create a new DB subnet group. Type `trendmicrodb-subgroup` in the name and description fields. 
+Open the RDS console and create a new DB subnet group. Type `trendmicrodb-subgroup` in the name and description fields. Then select the VPC `eks-net-01-VPC` which is the same used for EKS. Select the 3 availability zones and the 3 subnets then click Create.
 
 ![subgroup](images/subgroup.png)
 
@@ -224,15 +230,15 @@ Open the RDS console and create a new database with `Standard create`, select `P
 
 ![rds_1](images/rds_1.png)
 
-Type `trendmicrodb` in the DB instance identifier field and choose a username and a password.
+Type `trendmicrodb` in the DB instance identifier field and choose an username and a password.
 
 ![rds_2](images/rds_2.png)
 
-Allocate storage up to 20 GiB and disable autoscaling. Then select the same VPC as EKS and add all the public subnets with the Node Group Security Group. Then click Create. Disable Performance Insights. 
+Allocate storage up to 20 GiB and disable autoscaling. Then select the VPC `eks-net-01-VPC` which is the same used for EKS, the `trendmicrodb-subgroup` DB Subnet group and `eks-cluster-sg-eks-01-xxxxxxxxxx` Security Group. Disable Performance Insights. 
 
 ![rds_3](images/rds_3.png)
 
-Leave all the other options as default and click Create.
+Leave all the other options as default and click Create database.
 
 ## Trend Micro Smart Check
 From Trend Micro Cloud One Container Security select Scanners the click on `+ Add a scanner`.
